@@ -1,2 +1,4 @@
-export * from "./types"
-export * from './dto'
+export * from './skinport/getData.skinport.dto'
+export * from './skinport/data.skinport.dto'
+export * from './transfer/transfer.dto'
+export * from './transfer/user.dto'

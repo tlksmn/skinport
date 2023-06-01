@@ -1,0 +1,15 @@
+.container{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  .el{
+    border: rgba(66, 66, 190, 0.66) 1px solid;
+    padding: 0.2em;
+  }
+  #skin {
+    flex-basis: 60vw;
+  }
+  #user {
+    flex-basis: 35vw;
+  }
+}

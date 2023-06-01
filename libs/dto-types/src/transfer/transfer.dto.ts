@@ -1,5 +1,5 @@
-import {TransferTypeEnum} from "../../types";
 import {IsEnum, IsInt, IsNotEmpty, IsString, Min} from "class-validator";
+import {TransferTypeEnum} from "@skinport/dto";
 
 export class TransferDto {
   @IsInt()
@@ -20,3 +20,6 @@ export class TransferDto {
   @IsString()
   readonly ts: string = '';
 }
+
+interface TransferDtoI extends TransferDto {}
+export type TransferDtoT = TransferDtoI;

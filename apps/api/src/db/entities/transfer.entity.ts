@@ -1,8 +1,8 @@
 import {Column, Entity, ManyToOne, OneToMany} from "typeorm";
-import {TransferResultTypeEnum, TransferTypeEnum} from "@skinport/dto-types";
 import {Min} from "class-validator";
 import {UserEntity} from "./user.entity";
 import {AEntity} from "./a.entity";
+import {TransferResultTypeEnum, TransferTypeEnum} from "@skinport/dto";
 
 @Entity({name: 'transfer'})
 export class TransferEntity extends AEntity{

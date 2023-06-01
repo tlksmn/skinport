@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { appRoutes } from './app.routes';
+import {SkinComponent} from "./skin/skin.component";
+import {UserComponent} from "./user/user.component";
+import {ServicesModule} from "./services/services.module";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SkinComponent, UserComponent],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
+    ServicesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,7 +1,7 @@
 import {Injectable} from "@nestjs/common";
 import {AxiosRequestConfig} from "axios";
-import {CurrencyList, GetItemsDataT} from "@skinport/dto-types";
 import {ConfigService} from "@nestjs/config";
+import {CurrencyList, GetItemsDataT} from "@skinport/dto";
 
 @Injectable()
 export class ApiService {

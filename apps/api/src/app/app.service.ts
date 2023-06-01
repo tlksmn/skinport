@@ -7,10 +7,7 @@ import {CACHE_MANAGER} from "@nestjs/cache-manager";
 import {
   DataSkinportDto,
   GetDataSkinportDto,
-  GetItemsDataT,
-  TransferDto,
-  TransferResultTypeEnum,
-  TransferTypeEnum
+  TransferDto, UserDto,
 } from "@skinport/dto-types";
 import {Connection} from "typeorm";
 
@@ -18,6 +15,7 @@ import {Connection} from "typeorm";
 import {ApiService} from "../api/api.service";
 import {TransferEntity} from "../db/entities/transfer.entity";
 import {UserEntity} from "../db/entities/user.entity";
+import {GetItemsDataT, TransferResultTypeEnum, TransferTypeEnum} from "@skinport/dto";
 
 
 @Injectable()
@@ -117,5 +115,16 @@ export class AppService {
     }
     await queryRunner.release();
     throw new HttpException(TransferResultTypeEnum.SUCCESS, HttpStatus.OK);
+  }
+
+  getUsers(){
+    return this.userRepository.find()
+  }
+
+  createUser(data: UserDto){
+    const user = this.userRepository.create({
+      balance: data.balance,
+    })
+    return this.userRepository.save(user);
   }
 }

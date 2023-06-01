@@ -1,5 +1,5 @@
 import {Body, Controller, Get, Logger, Post, Query} from '@nestjs/common';
-import {GetDataSkinportDto, TransferDto} from "@skinport/dto-types";
+import {GetDataSkinportDto, TransferDto, UserDto} from "@skinport/dto-types";
 
 import { AppService } from './app.service';
 
@@ -7,7 +7,7 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('getData')
+  @Get('list')
   getData(@Query() data: GetDataSkinportDto){
     return this.appService.getFromSkinPortApi(data)
   }
@@ -15,5 +15,15 @@ export class AppController {
   @Post('buy')
   async transfer(@Body() data: TransferDto){
     await this.appService.transferAmountWithTransaction(data);
+  }
+
+  @Get('users')
+  async getListOfUsers(){
+    return this.appService.getUsers();
+  }
+
+  @Post('create-user')
+  async createUser(data: UserDto){
+    return this.appService.createUser(data);
   }
 }

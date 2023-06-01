@@ -16,9 +16,13 @@ export enum CurrencyList {
   TRY = "TRY",
   USD = "USD",
 }
-export type GetItemsDataT = {
-  app_id: number;
-  currency: CurrencyList;
-  tradable: boolean;
+
+export enum TransferTypeEnum {
+  BUY = "BUY",
+  SELL = "SELL"
 }
-export interface GetItemsDataI extends GetItemsDataT {}
+
+export enum TransferResultTypeEnum {
+  SUCCESS = "SUCCESS",
+  FAIL = "FAIL"
+}

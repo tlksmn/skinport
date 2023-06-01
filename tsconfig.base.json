@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@skinport/dto": ["libs/dto/src/index.ts"],
       "@skinport/dto-types": ["libs/dto-types/src/index.ts"]
     }
   },

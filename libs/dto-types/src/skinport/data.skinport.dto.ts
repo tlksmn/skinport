@@ -1,5 +1,5 @@
-import {CurrencyList} from "@skinport/dto-types";
 import {IsDate, IsEnum, IsInt, IsString, Min} from "class-validator";
+import {CurrencyList} from "@skinport/dto";
 
 export class DataSkinportDto {
   @IsString()
@@ -41,8 +41,5 @@ export class DataSkinportDto {
   updated_at!: Date;
 }
 
-interface DataSkinportResponseI extends DataSkinportDto {
+export interface DataSkinportResponseI extends DataSkinportDto {
 }
-
-export type DataSkinportResponseT = DataSkinportResponseI
-
