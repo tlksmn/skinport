@@ -14,7 +14,6 @@ export class AppController {
 
   @Post('buy')
   async transfer(@Body() data: TransferDto){
-    console.log(data);
     await this.appService.transferAmountWithTransaction(data);
   }
 }

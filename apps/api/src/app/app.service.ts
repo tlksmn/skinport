@@ -1,7 +1,7 @@
 import {HttpException, HttpStatus, Inject, Injectable} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
-import axios from "axios";
+import axios, {AxiosError, AxiosResponse} from "axios";
 import {Cache} from "cache-manager";
 import {CACHE_MANAGER} from "@nestjs/cache-manager";
 import {
@@ -18,7 +18,6 @@ import {Connection} from "typeorm";
 import {ApiService} from "../api/api.service";
 import {TransferEntity} from "../db/entities/transfer.entity";
 import {UserEntity} from "../db/entities/user.entity";
-import {HttpErrorResponse} from "@angular/common/http";
 
 
 @Injectable()
@@ -33,8 +32,8 @@ export class AppService {
   }
 
   async getFromSkinPortApi(data: GetDataSkinportDto) {
-    const cacheInString = `${data.app_id}_${data.currency}`;
-    const responseFromCache = await this.cacheManager.get<DataSkinportDto>(cacheInString);
+    const cacheInString = `${data.app_id}_${data.currency}_${data.tradable}`;
+    const responseFromCache = await this.cacheManager.get<DataSkinportDto[]>(cacheInString);
     if (responseFromCache) {
       return responseFromCache;
     }
@@ -42,12 +41,22 @@ export class AppService {
       {
         app_id: data.app_id,
         currency: data.currency,
-        tradable: data.tradable
+        tradable: data.tradable,
       });
+    try {
+      const response = await axios.request<DataSkinportDto[], AxiosResponse<DataSkinportDto[]>, GetItemsDataT>(headers);
+      await this.cacheManager.set(cacheInString, response.data);
+      return response.data;
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        throw new HttpException({
+          message: e.message,
+          params: e.config.params,
+          data: data
+        }, e.status)
+      }
+    }
 
-    const response = await axios.request<any, DataSkinportDto, GetItemsDataT>(headers);
-    await this.cacheManager.set(cacheInString, response);
-    return response;
   }
 
   // async transferAmount(data: TransferDto) {
@@ -73,7 +82,6 @@ export class AppService {
 
   async transferAmountWithTransaction(data: TransferDto) {
     const user = await this.userRepository.findOne({where: {id: data.user_id}});
-    console.log(user);
     if (!user) {
       throw new HttpException('user not found', HttpStatus.NOT_FOUND);
     }

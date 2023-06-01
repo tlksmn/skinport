@@ -1,10 +1,9 @@
 import {CurrencyList, GetItemsDataI} from "@skinport/dto-types";
-import {IsBoolean, IsEnum, IsInt, IsOptional, Min} from "class-validator";
+import {IsEnum, IsOptional} from "class-validator";
 
 export class GetDataSkinportDto implements GetItemsDataI {
   @IsOptional()
-  @IsInt()
-  @Min(0)
+  // @Type(()=> Number)
   readonly app_id: number = 730;
 
   @IsOptional()
@@ -12,6 +11,6 @@ export class GetDataSkinportDto implements GetItemsDataI {
   readonly currency: CurrencyList = CurrencyList.EUR;
 
   @IsOptional()
-  @IsBoolean()
+  // @Type(()=> Boolean)
   readonly tradable: boolean = false;
 }
