@@ -21,6 +21,7 @@ import {TransferEntity} from "./entities/transfer.entity";
         password: configService.get('POSTGRES_PASSWORD'),
         entities: [UserEntity, TransferEntity],
         synchronize: true,
+        // dropSchema: true
       })
     })]
 })
