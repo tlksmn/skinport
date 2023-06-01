@@ -1,5 +1,6 @@
 export enum TransferTypeEnum {
-  BUY ="BUY",
+  BUY = "BUY",
+  SELL = "SELL"
 }
 
 export enum TransferResultTypeEnum {
