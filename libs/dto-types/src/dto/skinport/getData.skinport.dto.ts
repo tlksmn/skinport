@@ -5,13 +5,13 @@ export class GetDataSkinportDto implements GetItemsDataI {
   @IsOptional()
   @IsInt()
   @Min(0)
-  app_id!: number;
+  readonly app_id: number = 730;
 
   @IsOptional()
   @IsEnum(CurrencyList)
-  currency!: CurrencyList;
+  readonly currency: CurrencyList = CurrencyList.EUR;
 
   @IsOptional()
   @IsBoolean()
-  tradable!: boolean;
+  readonly tradable: boolean = false;
 }
