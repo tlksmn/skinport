@@ -1,8 +1,9 @@
 import {AEntity} from "./a.entity";
-import {Column, ManyToOne} from "typeorm";
+import {Column, Entity, OneToMany} from "typeorm";
 import {Min} from "class-validator";
 import {TransferEntity} from "./transfer.entity";
 
+@Entity()
 export class UserEntity extends AEntity {
   @Column({
     type: "int"
@@ -10,6 +11,6 @@ export class UserEntity extends AEntity {
   @Min(0)
   balance: number;
 
-  @ManyToOne(()=> TransferEntity, (transfer)=> transfer.user)
+  @OneToMany(()=> TransferEntity, (transfer)=> transfer.user)
   transfers: TransferEntity[];
 }

@@ -1,12 +1,13 @@
-import {Column, Entity, OneToMany} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany} from "typeorm";
 import {TransferResultTypeEnum, TransferTypeEnum} from "@skinport/dto-types";
 import {Min} from "class-validator";
 import {UserEntity} from "./user.entity";
+import {AEntity} from "./a.entity";
 
 @Entity()
-export class TransferEntity {
+export class TransferEntity extends AEntity{
   @Column({
-    type: 'number',
+    type: 'int',
   })
   @Min(0)
   amount: number;
@@ -26,6 +27,6 @@ export class TransferEntity {
   })
   action: TransferTypeEnum;
 
-  @OneToMany(() => UserEntity, (user) => user.transfers)
+  @ManyToOne(() => UserEntity, (user) => user.transfers)
   user: UserEntity;
 }
