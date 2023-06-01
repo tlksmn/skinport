@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Logger, Post, Query} from '@nestjs/common';
+import {Body, Controller, Get, Post, Query} from '@nestjs/common';
 import {GetDataSkinportDto, TransferDto, UserDto} from "@skinport/dto-types";
 
 import { AppService } from './app.service';
@@ -23,7 +23,7 @@ export class AppController {
   }
 
   @Post('create-user')
-  async createUser(data: UserDto){
+  async createUser(@Body() data: UserDto){
     return this.appService.createUser(data);
   }
 }
