@@ -4,7 +4,7 @@ import {Min} from "class-validator";
 import {UserEntity} from "./user.entity";
 import {AEntity} from "./a.entity";
 
-@Entity()
+@Entity({name: 'transfer'})
 export class TransferEntity extends AEntity{
   @Column({
     type: 'int',

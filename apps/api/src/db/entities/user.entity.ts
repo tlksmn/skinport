@@ -3,7 +3,7 @@ import {Column, Entity, OneToMany} from "typeorm";
 import {Min} from "class-validator";
 import {TransferEntity} from "./transfer.entity";
 
-@Entity()
+@Entity({name: 'user'})
 export class UserEntity extends AEntity {
   @Column({
     type: "int"
