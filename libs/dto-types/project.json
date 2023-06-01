@@ -1,0 +1,26 @@
+{
+  "name": "dto-types",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/dto-types/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/dto-types",
+        "main": "libs/dto-types/src/index.ts",
+        "tsConfig": "libs/dto-types/tsconfig.lib.json",
+        "assets": ["libs/dto-types/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/dto-types/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
