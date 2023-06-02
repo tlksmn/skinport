@@ -26,6 +26,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getUsers();
     const subscription = this.skinService.skinFetchComplete
       .pipe(
         tap((value)=> console.log(value)),

@@ -15,7 +15,6 @@ export class SkinService {
     return this.apiService.get<DataSkinportDtoDec[]>('list', data)
       .pipe(
         tap((value) => this.skinsArray.next(value)),
-        tap(() => this.skinFetchComplete.next(Math.random()*1000))
       );
   }
 
