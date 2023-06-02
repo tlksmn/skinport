@@ -1,1 +1,37 @@
-<p>skin works!</p>
+<div>
+  <div class="ctrl">
+    <div class="filterForm">
+      <form [formGroup]="filterControlForm" (submit)="filterFormSubmit()">
+        <input type="checkbox" formControlName="tradable">
+        <input type="number" min="1" required formControlName="app_id">
+        <select name="" id="" formControlName="currency">
+          <option *ngFor="let currencyEl of currencyList" [selected]="currencyCtrl.value === currencyEl"
+                  [value]="currencyEl">
+            {{currencyEl}}
+          </option>
+        </select>
+        <button [disabled]="filterControlForm.invalid">✅</button>
+      </form>
+    </div>
+    <div class="paginationForm">
+      <div (click)="prevPage()">prev</div>
+      <div>{{currentPage}} of {{allPage}}</div>
+      <div (click)="nextPage()">next</div>
+    </div>
+  </div>
+  <div class="list">
+    <div *ngIf="skinService.skinsArray| async as skins">
+      <div>total :: {{skins.length}}</div>
+      <div *ngFor="let skin of skins.slice((currentPage-1)*everyPageCount,currentPage*everyPageCount); let i = index">
+        <div>{{((currentPage - 1) * everyPageCount) + i+1 }}
+          {{skin.market_hash_name}} |
+          🏷️ {{skin.currency}} |
+          🤑 {{skin.suggested_price}} |
+          🔽 {{skin.min_price}} - 🔼 {{skin.max_price}} |
+          💳 {{skin.mean_price}} |
+          ⑇  {{skin.quantity}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

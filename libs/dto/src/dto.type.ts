@@ -27,7 +27,7 @@ export class UserDto extends BaseDtoT{
 }
 
 export type CreateUserType = {
-  balance: number;
+  balance?: number|null;
 }
 
 export type TransferAmountType = {
