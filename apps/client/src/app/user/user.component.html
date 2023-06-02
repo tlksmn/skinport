@@ -2,9 +2,13 @@
   <div (click)="getUsers()">Users</div>
   <div *ngIf="userService.users | async as users">
     <div *ngFor="let user of users">
-      <div>{{user.id}}. {{user.name}} {{user.balance | currency}}</div>
+      <div (click)="selectUser(user)">{{user.id}}. {{user.name}} {{user.balance | currency}}</div>
     </div>
   </div>
+  <div class="selected" *ngIf="userService.userSelected|async as user">
+    <div>{{user.id}}. {{user.name}} {{user.balance | currency}}</div>
+  </div>
+
 
   <form [formGroup]="addNewUserForm" (ngSubmit)="addNewUserSubmit()">
     <input type="number" id="currency" required min="1" formControlName="balance">

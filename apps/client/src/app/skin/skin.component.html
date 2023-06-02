@@ -20,10 +20,11 @@
     </div>
   </div>
   <div class="list">
-    <div *ngIf="skinService.skinsArray| async as skins">
+    <ng-container *ngIf="skinService.skinsArray| async as skins">
       <div>total :: {{skins.length}}</div>
-      <div *ngFor="let skin of skins.slice((currentPage-1)*everyPageCount,currentPage*everyPageCount); let i = index">
-        <div>{{((currentPage - 1) * everyPageCount) + i+1 }}
+      <div *ngFor="let skin of skins.slice((currentPage-1)*everyPageCount,currentPage*everyPageCount); let i = index" class="item">
+        <div class="name">
+          {{((currentPage - 1) * everyPageCount) + i+1 }}.
           {{skin.market_hash_name}} |
           🏷️ {{skin.currency}} |
           🤑 {{skin.suggested_price}} |
@@ -31,7 +32,9 @@
           💳 {{skin.mean_price}} |
           ⑇  {{skin.quantity}}
         </div>
+        <button (click)="transfer(false, skin)">💸 sell</button>
+        <button (click)="transfer(true, skin)">🛒 buy</button>
       </div>
-    </div>
+    </ng-container>
   </div>
 </div>

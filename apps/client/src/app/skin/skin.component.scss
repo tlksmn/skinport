@@ -6,3 +6,14 @@
     gap: 0.5em
   }
 }
+
+.list{
+  .item{
+    display: flex;
+    gap: 0.4em;
+    justify-content: flex-end;
+    .name{
+      align-self: flex-start;
+    }
+  }
+}

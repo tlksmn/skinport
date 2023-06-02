@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SkinService} from "../services/skin.service";
-import {CurrencyList} from "@skinport/dto";
+import {CurrencyList, DataSkinportDtoDec, TransferTypeEnum, UserDto} from "@skinport/dto";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Subscription} from "rxjs";
+import {catchError, NEVER, of, Subscription, tap, throwError} from "rxjs";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'skinport-skin',
@@ -16,8 +17,13 @@ export class SkinComponent implements OnInit, OnDestroy {
   public allPage: number = 1;
   public everyPageCount: number = 30;
   private subscriptions: Subscription[] = [];
+  private userSelected!: UserDto;
 
-  constructor(public readonly skinService: SkinService, private readonly formBuilder: FormBuilder) {
+  constructor(
+    public readonly skinService: SkinService,
+    private readonly formBuilder: FormBuilder,
+    private readonly userService: UserService
+  ) {
     this.filterControlForm = formBuilder.group<FilterControlFromT>({
       tradable: new FormControl(true, [Validators.required]),
       app_id: new FormControl(730, [Validators.required, Validators.min(1)]),
@@ -27,6 +33,12 @@ export class SkinComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.filterFormSubmit();
+    const subscription = this.userService.userSelected.pipe(
+      tap(value => {
+        this.userSelected = value;
+      })
+    ).subscribe();
+    this.subscriptions.push(subscription);
   }
 
   ngOnDestroy() {
@@ -43,7 +55,7 @@ export class SkinComponent implements OnInit, OnDestroy {
       tradable: this.tradableCtrl.value!
     }).subscribe({
       next: (value) => {
-        this.allPage = Math.ceil(value.length/this.everyPageCount);
+        this.allPage = Math.ceil(value.length / this.everyPageCount);
         this.currentPage = 1;
       }
     })
@@ -51,17 +63,35 @@ export class SkinComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
-  nextPage(){
-    if(this.currentPage < this.allPage){
+  nextPage() {
+    if (this.currentPage < this.allPage) {
       this.currentPage++;
     }
   }
-  prevPage(){
-    if(this.currentPage > 1){
+
+  prevPage() {
+    if (this.currentPage > 1) {
       this.currentPage--;
     }
   }
 
+  async transfer(buy: boolean, item: DataSkinportDtoDec,) {
+    if (this.userSelected) {
+      await this.skinService.transferAmount({
+        amount: Math.ceil(buy ? item.suggested_price : item.mean_price),
+        action: buy ? TransferTypeEnum.BUY : TransferTypeEnum.SELL,
+        user_id: this.userSelected.id,
+        ts: ''
+      }).pipe(
+        catchError((err) => {
+          alert(err.error.message)
+          return NEVER
+        })
+      ).toPromise()
+    } else {
+      alert('please select user')
+    }
+  }
 
   get currencyCtrl() {
     return this.filterControlForm.get('currency')!;
