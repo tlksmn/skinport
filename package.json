@@ -1,8 +1,12 @@
 {
   "name": "@skinport/source",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "author": "Shakhan Abdiev",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "api": "NODE_ENV=dev nx serve api",
+    "client": "nx serve client"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~16.0.0",

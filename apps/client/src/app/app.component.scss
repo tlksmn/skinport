@@ -13,3 +13,18 @@
     flex-basis: 35vw;
   }
 }
+
+@media (max-width: 900px) {
+  .container {
+    flex-wrap: wrap;
+    gap: 1em;
+    #skin {
+      flex-basis: 100vw;
+      order: 2;
+    }
+    #user {
+      flex-basis: 100vw;
+      order: 1;
+    }
+  }
+}

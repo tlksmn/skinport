@@ -10,7 +10,10 @@ import {AppModule} from './app/app.module';
 import process from "process";
 
 const corsOptions = {
-  origin: 'http://localhost:4200',
+  origin:
+  process.env.NODE_ENV === 'dev'
+    ? 'http://localhost:4200'
+    : 'https://skinport.biy.kz',
   credentials: true,
   optionSuccessStatus: 200,
 };
